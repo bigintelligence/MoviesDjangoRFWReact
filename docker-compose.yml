@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  movies_backend:
+    restart: always
+    build:
+      context: ./movies_backend
+      args:
+        DJANGO_ALLOWED_HOSTS: "127.0.0.1 localhost 0.0.0.0 api"
+        DJANGO_CORS_ORIGIN_WHITELIST: "http://127.0.0.1 http://localhost http://0.0.0.0 http://localhost:3000 http://127.0.0.1:3000 http://0.0.0.0:3000 http://api"
+    ports:
+      - "8000:8000"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        python manage.py makemigrations 
+        python manage.py migrate 
+        python manage.py runserver 0.0.0.0:8000
+  movies_frontend:
+    build:
+      context: ./movies_frontend
+      args:
+        REACT_APP_SERVER: "http://localhost:8000"
+        REACT_APP_ENDPOINT: "/movies/"
+        REACT_APP_ENDPOINT_ACTORS: "/actors/"
+        REACT_APP_ENDPOINT_COMMON_ACTORS_MOVIES: "/common_actors?movies="
+    volumes:
+      - front_build_folder:/movies_frontend/build
+    ports:
+      - 80:8080
+    depends_on:
+      - movies_backend
+volumes:
+  front_build_folder:

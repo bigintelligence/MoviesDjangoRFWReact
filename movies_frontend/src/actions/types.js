@@ -1,0 +1,6 @@
+export const GET_MOVIES = 'GET_MOVIES';
+export const CREATE_MOVIES = 'CREATE_MOVIES';
+export const GET_COMMON_ACTORS_MOVIES = 'GET_COMMON_ACTORS_MOVIES';
+export const MOVIES_ERROR = 'MOVIES_ERROR';
+export const GET_ACTORS = 'GET_ACTORS';
+export const SELECT_MOVIES = 'SELECT_MOVIES';
